@@ -1,0 +1,48 @@
+{
+  "name": "datamincer/starter",
+  "version": "0.1",
+  "description": "DataMincer: Starter",
+  "authors": [
+    {
+      "name": "Artiom Neganov",
+      "email": "aneganov@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "type": "project",
+  "minimum-stability": "dev",
+  "scripts": {
+    "dm": "./vendor/bin/dm-dm --base=bundles"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:OnkelTem/task-runner.git"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:OnkelTem/yaml-elc.git"
+    },
+    {
+      "type": "git",
+      "url": "git@bitbucket.org:datamincer/dm.git"
+    },
+    {
+      "type": "git",
+      "url": "git@bitbucket.org:datamincer/core.git"
+    },
+    {
+      "type": "git",
+      "url": "git@bitbucket.org:datamincer/plugins.git"
+    },
+    {
+      "type": "git",
+      "url": "git@bitbucket.org:datamincer/crowdanki.git"
+    }
+  ],
+  "require": {
+    "datamincer/dm": "dev-master",
+    "datamincer/plugins": "dev-master",
+    "datamincer/crowdanki": "dev-master"
+  }
+}

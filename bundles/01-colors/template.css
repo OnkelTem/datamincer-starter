@@ -1,0 +1,76 @@
+html, body, #content, #qa {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  font-family: Arial, sans-serif;
+  font-size: 5vw;
+  text-align: center;
+  color: #999;
+  background-color: black;
+}
+
+#content, #qa {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: stretch;
+}
+
+.samples {
+  margin: 6vh;
+  height: 20vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: stretch;
+}
+
+.samples > div {
+  font-size: 3vw;
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.color {
+  height: 12vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.color-box {
+  box-sizing: border-box;
+  width: 100%;
+  height: 56vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  background: black;
+}
+
+.code {
+  flex: 1 1 auto;
+  margin: 6vh;
+  outline: 1px dashed rgba(100, 100, 100, 0.5);
+}
+
+hr {
+  display: none;
+}
+
+@media (orientation: portrait) {
+  .card {
+    font-size: 7vw;
+  }
+  .samples > div {
+    font-size: 5vw;
+  }
+}

@@ -1,0 +1,49 @@
+version: "0.1"
+
+name: 'DMS'
+
+generators:
+  - workers:
+      - worker: csv
+        data:
+          field: file
+          path: 140-css3-colors.csv
+        columns:
+          color: color
+          code: code
+      - worker: crowdankideck
+        build:
+          name: 'BuildName'
+          path:
+            field: concat
+            items: ['build/', '@bundle.name']
+        deck:
+          uuid:
+            field: uuid
+          name: 'DeckName'
+          desc: 'Deck description'
+        config:
+          uuid:
+            field: uuid
+          name: 'ConfigName'
+        model:
+          uuid:
+            field: uuid
+          name: 'Model'
+          templates:
+            - field: twig
+              template:
+                field: file
+                path: 'template.twig'
+          css:
+            field: file
+            path: 'template.css'
+        note:
+          fields:
+            color: '@row.color'
+            code: '@row.code'
+          guid:
+            field: guid
+        defaults:
+          model:
+            req: [[0, 'all', [2]]]
