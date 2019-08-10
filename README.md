@@ -8,7 +8,7 @@ Starter kit and examples.
 
 Simple deck with two fields: **color name** and its **hex code**.
 
-Path: `bundles/01-color`
+Path: `bundles/01-colors`
 
 Used plugins:
 
