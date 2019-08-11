@@ -40,10 +40,11 @@ $ composer run dm deck generate -- --filter=01-colors
 
 ## Bundles
 
-* ### Colors (01-colors)
+### Colors (01-colors)
 
 Simple deck with two fields: **color name** and its **hex code**.
 As a data source it uses locally stored CSV file with 140 CSS3 named colors.
+
 
 Used plugins:
 
