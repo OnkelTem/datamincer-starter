@@ -47,8 +47,13 @@ As a data source it uses locally stored CSV file with 140 CSS3 named colors.
 
 Used plugins:
 
-* Decks: `named`
+* Decks: `default`
 * Services: `-`
 * Generators: `default`
 * Workers: `csv`, `crowdankideck`
 * Fields: `file`, `concat`, `uuid`, `guid`, `twig`, `value`
+
+| Screenshot 1 | Screenshot 2 | Screenshot 3 |
+| --- | --- | --- |
+| ![scr1](doc/01-colors_1.jpg)  | ![scr1](doc/01-colors_2.jpg)  | ![scr1](doc/01-colors_3.jpg) |
+
