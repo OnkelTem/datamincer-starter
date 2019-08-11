@@ -1,6 +1,7 @@
-version: "0.1"
-
-name: 'DMS'
+vars:
+  code: 'DMS-01-COLOR'
+  prefix: 'DataMincer.Starter'
+  name: '@bundle.name'
 
 generators:
   - workers:
@@ -13,25 +14,39 @@ generators:
           code: code
       - worker: crowdankideck
         build:
-          name: 'BuildName'
+          name: '@vars.name'
           path:
             field: concat
             items: ['build/', '@bundle.name']
         deck:
           uuid:
             field: uuid
-          name: 'DeckName'
-          desc: 'Deck description'
+          name:
+            field: concat
+            items: ['@vars.prefix', '@vars.name']
+            glue: '::'
+          desc:
+            field: twig
+            template:
+              field: file
+              path: desc.twig
+            params:
+              deck: '@vars.name'
         config:
           uuid:
             field: uuid
-          name: 'ConfigName'
+          name:
+            field: concat
+            items: ['@vars.code', '_CFG']
         model:
           uuid:
             field: uuid
-          name: 'Model'
+          name:
+            field: concat
+            items: ['@vars.code', '_MDL']
           templates:
-            - field: twig
+            main:
+              field: twig
               template:
                 field: file
                 path: 'template.twig'
@@ -45,5 +60,8 @@ generators:
           guid:
             field: guid
         defaults:
+          config:
+            new:
+              order: 0
           model:
             req: [[0, 'all', [2]]]
