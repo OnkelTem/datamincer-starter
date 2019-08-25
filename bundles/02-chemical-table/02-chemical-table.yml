@@ -1,0 +1,52 @@
+lang/[]:
+  en: ["en"]
+  ru: ["ru"]
+
+vars:
+  build_path:
+    field: concat
+    items: ['build/', '@bundle.name']
+  prefix: 'DataMincer.Starter'
+  name: '@bundle.name'
+
+generators:
+  buildTable:
+    workers:
+      - worker: csv
+        data:
+          field: file
+          path: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-H3QCygwviZKvi2ZcgpWtUWJ-g8RfEQasz2Cus4hhyFVwzuOpJFheuFKkpYsOgrkX9PhO0S6uGmg9/pub?gid=515677560&single=true&output=csv'
+        columns:
+          no: No
+          symbol: Symbol
+          group: Group
+          period: Period
+          latin: LatinName
+          name:
+            '-[en]': NameEn
+            '-[ru]': NameRu
+          origin:
+            '-[en]': OriginEn
+            '-[ru]': OriginRu
+          weight: Atomic weight (u)
+      - worker: group
+        from: row
+        by: [ ]
+      - worker: process
+        fields:
+          elems:
+            field: groupby
+            list: '@row.items'
+            by: [period, group]
+          table:
+            field: chain
+            items:
+              - field: twig
+                template:
+                  field: file
+                  path: table.twig
+              - field: savefile
+                contents: '@input'
+                destination:
+                  field: concat
+                  items: ['@vars.build_path', '/_table.html']

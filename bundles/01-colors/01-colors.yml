@@ -1,10 +1,17 @@
 vars:
-  code: 'DMS-01-COLOR'
-  prefix: 'DataMincer.Starter'
-  name: '@bundle.name'
+  buildName: 'DmsCss3Colors'
+  buildPath:
+    field: concat
+    items: ['build/', '@bundle.name']
+  deckGroup: 'DataMincer.Starter'
+  deckName: 'CSS3 Colors'
+  deckCode: '@vars.buildName'
+  url:
+    field: githuburl
 
 generators:
-  - workers:
+  BuildDeck:
+    workers:
       - worker: csv
         data:
           field: file
@@ -14,36 +21,28 @@ generators:
           code: code
       - worker: crowdankideck
         build:
-          name: '@vars.name'
-          path:
-            field: concat
-            items: ['build/', '@bundle.name']
+          name: '@vars.buildName'
+          path: '@vars.buildPath'
         deck:
           uuid:
             field: uuid
           name:
             field: concat
-            items: ['@vars.prefix', '@vars.name']
+            items: ['@vars.deckGroup', '@vars.deckName']
             glue: '::'
           desc:
             field: twig
             template:
               field: file
               path: desc.twig
-            params:
-              deck: '@vars.name'
         config:
           uuid:
             field: uuid
-          name:
-            field: concat
-            items: ['@vars.code', '_CFG']
+          name: '@vars.deckCode'
         model:
           uuid:
             field: uuid
-          name:
-            field: concat
-            items: ['@vars.code', '_MDL']
+          name: '@vars.deckCode'
           templates:
             main:
               field: twig
