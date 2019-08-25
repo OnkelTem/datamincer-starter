@@ -15,10 +15,12 @@ generators:
       - worker: csv
         data:
           field: file
-          path: 140-css3-colors.csv
+          path: 'DM_ Colors - Colors.csv'
         columns:
           color: color
           code: code
+          group: group
+          offset: offset
       - worker: crowdankideck
         build:
           name: '@vars.buildName'
@@ -64,3 +66,36 @@ generators:
               order: 0
           model:
             req: [[0, 'all', [2]]]
+  ColorTable:
+    workers:
+      - worker: csv
+        data:
+          field: file
+          path: 'DM_ Colors - Colors.csv'
+        columns:
+          color: color
+          code: code
+          group: group
+          offset: offset
+      - worker: group
+        from: row
+        by: [ ]
+      - worker: process
+        fields:
+          elems:
+            field: groupby
+            list: '@row.items'
+            by: [group, offset]
+          table:
+            field: chain
+            items:
+              - field: twig
+                template:
+                  field: file
+                  path: table.twig
+              - field: savefile
+                contents: '@input'
+                destination:
+                  field: concat
+                  items: ['@vars.buildPath', '/_table.html']
+

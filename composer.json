@@ -12,7 +12,7 @@
   "type": "project",
   "minimum-stability": "dev",
   "scripts": {
-    "dm": "./vendor/bin/dm-dm --base=bundles"
+    "dm": "vendor/bin/dm --base=bundles"
   },
   "repositories": [
     {
@@ -25,7 +25,7 @@
     },
     {
       "type": "git",
-      "url": "git@bitbucket.org:datamincer/dm.git"
+      "url": "git@bitbucket.org:datamincer/launcher.git"
     },
     {
       "type": "git",
@@ -41,7 +41,7 @@
     }
   ],
   "require": {
-    "datamincer/dm": "dev-master",
+    "datamincer/launcher": "dev-master",
     "datamincer/plugins": "dev-master",
     "datamincer/crowdanki": "dev-master"
   }
