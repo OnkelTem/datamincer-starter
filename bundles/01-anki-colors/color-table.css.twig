@@ -1,0 +1,5 @@
+{%~ for group, group_content in fields.elems %}
+  {%~ for offset, item in group_content %}
+    {{~ '.' ~ item[0].color }} { {{ 'background-color' }}: {{ '#' ~ item[0].code }}; }
+  {%~ endfor %}
+{%~ endfor %}

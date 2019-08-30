@@ -1,71 +1,15 @@
-vars:
+global:
   buildName: 'DmsCss3Colors'
   buildPath:
     field: concat
     items: ['build/', '@bundle.name']
   deckGroup: 'DataMincer.Starter'
   deckName: 'CSS3 Colors'
-  deckCode: '@vars.buildName'
+  deckCode: '@global.buildName'
   url:
     field: githuburl
 
 generators:
-  BuildDeck:
-    workers:
-      - worker: csv
-        data:
-          field: file
-          path: 'DM_ Colors - Colors.csv'
-        columns:
-          color: color
-          code: code
-          group: group
-          offset: offset
-      - worker: crowdankideck
-        build:
-          name: '@vars.buildName'
-          path: '@vars.buildPath'
-        deck:
-          uuid:
-            field: uuid
-          name:
-            field: concat
-            items: ['@vars.deckGroup', '@vars.deckName']
-            glue: '::'
-          desc:
-            field: twig
-            template:
-              field: file
-              path: desc.twig
-        config:
-          uuid:
-            field: uuid
-          name: '@vars.deckCode'
-        model:
-          uuid:
-            field: uuid
-          name: '@vars.deckCode'
-          templates:
-            main:
-              field: twig
-              template:
-                field: file
-                path: 'template.twig'
-          css:
-            field: file
-            path: 'template.css'
-        note:
-          fields:
-            color: '@row.color'
-            code: '@row.code'
-          guid:
-            field: guid
-        defaults:
-          config:
-            new:
-              order: 0
-          model:
-            req: [[0, 'all', [2]]]
   ColorTable:
     workers:
       - worker: csv
@@ -77,6 +21,20 @@ generators:
           code: code
           group: group
           offset: offset
+      - worker: process
+        merge: merge
+        fields:
+          name:
+            field: chain
+            items:
+              - field: preg_match
+                variant: all
+                regexp: '~((?:^|[A-Z])[a-z]+)~'
+                subject: '@row.color'
+                return: 0
+              - field: concat
+                items: '@input'
+                glue: ' '
       - worker: group
         from: row
         by: [ ]
@@ -86,16 +44,115 @@ generators:
             field: groupby
             list: '@row.items'
             by: [group, offset]
-          table:
+          colorTableCss:
             field: chain
             items:
               - field: twig
                 template:
                   field: file
-                  path: table.twig
+                  path: color-table.css.twig
               - field: savefile
                 contents: '@input'
                 destination:
                   field: concat
-                  items: ['@vars.buildPath', '/_table.html']
+                  items: ['@global.buildPath', '/color-table.css']
+          colorTableHtml:
+            field: chain
+            items:
+              - field: twig
+                template:
+                  field: file
+                  path: color-table.html.twig
+              - field: savefile
+                contents: '@input'
+                destination:
+                  field: concat
+                  items: ['@global.buildPath', '/color-table.html']
+  BuildDeck:
+    workers:
+      - worker: csv
+        data:
+          field: file
+          path: 'DM_ Colors - Colors.csv'
+        columns:
+          color: color
+          code: code
+          group: group
+          offset: offset
+      - worker: process
+        merge: merge
+        fields:
+          name:
+            field: chain
+            items:
+              - field: preg_match
+                variant: all
+                regexp: '~((?:^|[A-Z])[a-z]+)~'
+                subject: '@row.color'
+                return: 0
+              - field: concat
+                items: '@input'
+                glue: ' '
+      - worker: crowdankideck
+        build:
+          name: '@global.buildName'
+          path: '@global.buildPath'
+        deck:
+          uuid:
+            field: uuid
+          name:
+            field: concat
+            items: ['@global.deckGroup', '@global.deckName']
+            glue: '::'
+          desc:
+            field: twig
+            template:
+              field: file
+              path: desc.twig
+        config:
+          uuid:
+            field: uuid
+          name: '@global.deckCode'
+        model:
+          uuid:
+            field: uuid
+          name: '@global.deckCode'
+          templates:
+            main:
+              field: twig
+              template:
+                field: file
+                path: 'card.html.twig'
+              params:
+                colorTableHtml:
+                  field: file
+                  path:
+                    field: concat
+                    items: ['@global.buildPath', '/color-table.html']
+          css:
+            field: twig
+            template:
+              field: file
+              path: 'card.css.twig'
+            params:
+              colorTableCss:
+                field: file
+                path:
+                  field: concat
+                  items: ['@global.buildPath', '/color-table.css']
+        note:
+          fields:
+            name: '@row.name'
+            color: '@row.color'
+            code: '@row.code'
+          guid:
+            field: guid
+#        preview:
+#          note: 45
+        defaults:
+          config:
+            new:
+              order: 0
+          model:
+            req: [[0, 'all', [2]]]
 

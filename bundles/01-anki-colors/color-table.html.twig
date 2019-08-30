@@ -1,0 +1,12 @@
+<div class="color-table">
+  {% for group, group_content in fields.elems %}
+    <div class="group">
+      <div class="group-name">{{ group }}</div>
+      <div class="group-items">
+        {% for offset, item in group_content %}
+          <i class="{{ item[0].color }}" title="{{ item[0].name }}">&nbsp;</i>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

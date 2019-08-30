@@ -20,31 +20,30 @@ Get the list of all defined bundles:
 $ composer run dm bundle info
 ```
 
-Generating all decks from all bundles:
+Run all units from all bundles:
 
 ```
-$ composer run dm deck generate
+$ composer run dm unit generate
 ```
 
-Generating all decks from a specific bundle:
+Filter by bundle: 
 
 ```
-$ composer run dm deck generate -- --filter=<bundle> 
+$ composer run dm unit generate -- --filter=<bundle> 
 ```
 
-For instance, to generate deck from the bundle `01-colors`:
+For instance, to run unit from the bundle `01-colors`:
 
 ```
-$ composer run dm deck generate -- --filter=01-colors 
+$ composer run dm unit generate -- --filter=01-colors 
 ```
 
 ## Bundles
 
 ### Colors (01-colors)
 
-Simple deck with two fields: **color name** and its **hex code**.
-As a data source it uses locally stored CSV file with 140 CSS3 named colors.
-
+Simple unit with two fields: **color name** and its **hex code**.
+Data source is stored locally. It's a CSV file with 140 CSS3 named colors.
 
 Used plugins:
 
@@ -53,8 +52,3 @@ Used plugins:
 * Generators: `default`
 * Workers: `csv`, `crowdankideck`
 * Fields: `file`, `concat`, `uuid`, `guid`, `twig`, `value`
-
-| Screenshot 1 | Screenshot 2 | Screenshot 3 |
-| --- | --- | --- |
-| ![scr1](doc/01-colors_1.jpg)  | ![scr1](doc/01-colors_2.jpg)  | ![scr1](doc/01-colors_3.jpg) |
-
