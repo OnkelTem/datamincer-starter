@@ -1,48 +1,40 @@
 {
-  "name": "datamincer/starter",
-  "version": "0.1",
-  "description": "DataMincer: Starter",
+  "name": "datamincer/project-default",
+  "description": "DataMincer: Project Template",
+  "type": "project",
   "authors": [
     {
-      "name": "Artiom Neganov",
-      "email": "aneganov@gmail.com",
-      "role": "Developer"
+      "name": "",
+      "role": ""
     }
   ],
-  "type": "project",
-  "minimum-stability": "dev",
-  "scripts": {
-    "dm": "vendor/bin/dm --base=bundles"
-  },
   "repositories": [
     {
-      "type": "git",
-      "url": "git@github.com:OnkelTem/task-runner.git"
-    },
-    {
-      "type": "git",
-      "url": "git@github.com:OnkelTem/yaml-elc.git"
-    },
-    {
-      "type": "git",
-      "url": "git@bitbucket.org:datamincer/launcher.git"
-    },
-    {
-      "type": "git",
-      "url": "git@bitbucket.org:datamincer/core.git"
-    },
-    {
-      "type": "git",
-      "url": "git@bitbucket.org:datamincer/plugins.git"
-    },
-    {
-      "type": "git",
-      "url": "git@bitbucket.org:datamincer/crowdanki.git"
+      "type": "composer",
+      "url": "https://datamincer.bitbucket.io"
     }
   ],
   "require": {
+    "php": ">=7.2",
+    "datamincer/bundle-anki-css3colors": "dev-master",
+    "datamincer/core": "dev-master",
     "datamincer/launcher": "dev-master",
     "datamincer/plugins": "dev-master",
-    "datamincer/crowdanki": "dev-master"
+    "oomphinc/composer-installers-extender": "dev-master"
+  },
+  "scripts": {
+    "dm": "vendor/bin/dm",
+    "dm-info": "vendor/bin/dm bundle info",
+    "dm-gen": "vendor/bin/dm unit generate"
+  },
+  "minimum-stability": "dev",
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "installer-types": ["datamincer-bundle"],
+    "installer-paths": {
+      "bundles/{$name}": ["type:datamincer-bundle"]
+    }
   }
 }
