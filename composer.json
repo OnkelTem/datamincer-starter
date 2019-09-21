@@ -35,6 +35,11 @@
     "installer-types": ["datamincer-bundle"],
     "installer-paths": {
       "bundles/{$name}": ["type:datamincer-bundle"]
+    },
+    "data-mincer-options": {
+      "overrides": [
+        ":global: {deckGroup: DataMincer Starter}"
+      ]
     }
   }
 }
