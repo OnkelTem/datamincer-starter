@@ -1,0 +1,32 @@
+{
+  "name": "datamincer/bundle-anki-periodic-table",
+  "description": "Anki deck: Periodic Table",
+  "type": "datamincer-bundle",
+  "authors": [
+    {
+      "name": "",
+      "role": ""
+    }
+  ],
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://datamincer.bitbucket.io"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "datamincer/core": "dev-master",
+    "datamincer/launcher": "dev-master",
+    "datamincer/plugins": "dev-master",
+    "datamincer/crowdanki": "dev-master"
+  },
+  "scripts": {
+    "dm": "vendor/bin/dm",
+    "dm-info": "vendor/bin/dm bundle info",
+    "dm-gen": "vendor/bin/dm unit generate"
+  },
+  "extra": {
+  }
+}

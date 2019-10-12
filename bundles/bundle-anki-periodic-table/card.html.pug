@@ -1,0 +1,44 @@
+mixin qattr(name, value, side)
+  div(class=name + ' ' + side)
+    =side === 'q' ? '..?' : value
+
+mixin el(side)
+  .element(data-type="{{ type }}")
+    +qattr('name', '{{ name }}', side)
+    .no {{ no }}
+    .symbol {{ symbol }}
+    .weight {{ weight }}
+    +qattr('latin', '{{ latin }}', side)
+
+mixin table
+  | !{params.tableHtml}
+
+mixin side(side)
+  - bg = media.images["bg.jpg"]
+  #card(class=side style="background: url(" + bg +")")
+    block
+
+mixin js
+  script.
+    const no="{{ no }}";
+    const swatch = document.querySelector('td[data-no="' + no + '"]');
+    if (swatch) swatch.classList.add('selected');
+
+
++side('q')
+  .top
+    +el('q')
+  .bottom
+    +table
+
++js
+
+split
+
++side('a')
+  .top
+    +el('a')
+  .bottom
+    +table
+
++js

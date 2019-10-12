@@ -1,0 +1,119 @@
+lang/[]:
+  en: ["en"]
+  ru: ["ru"]
+
+global:
+  buildName: { field: concat, items: ['PeriodicTable ([$])'] }
+  deckGroup: ''
+  deckName: 'Periodic Table'
+  deckFullName:
+    field: concat
+    items: ['@global.deckGroup', '@global.deckName']
+    glue: '::'
+    filter: false
+  deckCode: '@global.buildName'
+  url: { field: githuburl, path: 'bundle://', failsafe: true }
+  data:
+    field: csv
+    data:
+      field: file
+      path: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-H3QCygwviZKvi2ZcgpWtUWJ-g8RfEQasz2Cus4hhyFVwzuOpJFheuFKkpYsOgrkX9PhO0S6uGmg9/pub?gid=515677560&single=true&output=csv'
+    columns:
+      no: No
+      symbol: Symbol
+      period: Period
+      group: Group
+      latin: Latin name
+      name:
+        '-[en]': Name, en
+        '-[ru]': Name, ru
+      weight: Atomic weight (u)
+      density: Density (g/cm3)
+      melts: Melting point (C)
+      boils: Boiling point (C)
+      type: Type id
+      type_name:
+        '-[en]': Type, en
+        '-[ru]': Type, ru
+      discovered_at: Discovered at
+      discovered_in: Discovered in
+      discovered_by:
+        '-[en]': Discovered by, en
+        '-[ru]': Discovered by, ru
+      origin:
+        '-[en]': Origin, en
+        '-[ru]': Origin, ru
+
+generators:
+  - workers:
+    - worker: iterator
+      use: '@global.data'
+    - worker: group
+      from: row
+      by: [ ]
+    - worker: process
+      fields:
+        elems:
+          field: groupby
+          list: '@row.items'
+          by: [period, group]
+        tableHtml:
+          field: chain
+          items:
+            - field: pug
+              template:
+                field: file
+                path: 'bundle://table.html.pug'
+            - field: savefile
+              contents: '@input'
+              destination: 'tmp://table.html'
+  - workers:
+    - worker: iterator
+      use: '@global.data'
+    - worker: crowdankideck
+      build: { field: concat, items: ['build://', '@global.buildName'] }
+      deck:
+        uuid: { field: uuid }
+        name: '@global.deckFullName'
+        desc:
+          field: twig
+          template: { field: file, path: 'bundle://desc.twig' }
+      config:
+        uuid: { field: uuid }
+        name: '@global.deckCode'
+      media:
+        images:
+          field: importfiles
+          mask: '*.jpg'
+          path: 'bundle://'
+          destination: { field: concat , items: ['@build', '/media'] }
+      model:
+        uuid: { field: uuid }
+        name: '@global.deckCode'
+        templates:
+          main:
+            field: pug
+            template: { field: file, path: 'bundle://card.html.pug' }
+            params:
+              tableHtml: { field: file, path: 'tmp://table.html' }
+        css:
+          field: scss
+          template:
+            field: twig
+            template: { field: file, path: 'bundle://card.scss.twig' }
+            params:
+              tableCss:
+                field: file
+                path: 'bundle://deck.scss'
+      note:
+        note: '@row'
+        guid: { field: guid }
+#      preview:
+#        note: 39
+      defaults:
+        config:
+          new:
+            order: 0
+        model:
+          req: [[0, 'all', [2]]]
+

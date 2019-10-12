@@ -1,0 +1,28 @@
+table.periodic.primary
+  tbody
+    tr
+      th
+      each j in range(1, 18)
+        th.col= j
+    each i in range(1, 7)
+      tr
+        th.row= i
+        each j in range(1, 18)
+            if is_array(fields.elems[i][j])
+              each el in fields.elems[i][j]
+                td(data-type=el.type data-no=el.no title=el.no + " " + el.name)= el.symbol
+            else
+              td
+    tr.split
+    tr
+      th
+      each i in range(1, 3)
+        td
+      each el, index in fields.elems[6][31]
+        td(data-type=el.type data-no=el.no title=el.no + " " + el.name)= el.symbol
+    tr
+      th
+      each i in range(1, 3)
+        td
+      each el, index in fields.elems[7][32]
+        td(data-type=el.type data-no=el.no title=el.no + " " + el.name)= el.symbol

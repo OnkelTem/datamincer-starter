@@ -1,0 +1,25 @@
+<script>
+  const color="{{ '{{' ~ color ~ '}}' }}";
+  const swatch = document.querySelector('i.' + color);
+  if (swatch) {
+    swatch.classList.add('selected');
+  }
+</script>
+
+<div id="card" class="q">
+  {% block card %}{% endblock %}
+</div>
+
+--
+
+<div id="card" class="a">
+  {% block card %}{% endblock %}
+</div>
+
+{#<script>#}
+{#  const color="{{'{{'}}color{{'}}'}}";#}
+{#  const swatch = document.querySelector('i.' + color);#}
+{#  if (swatch) {#}
+{#    swatch.classList.add('selected');#}
+{#  }#}
+{#</script>#}
